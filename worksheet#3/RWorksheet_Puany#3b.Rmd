@@ -141,7 +141,7 @@ subset(datf, Siblings_at_School >= 5)
 ```
 
 #14
-Over the span of July 14–21, 2020, Twitter users were mostly sharing negative sentiments. Also, tweet activity dipped on July 20 across all sentiment types. This pattern may reflect public reaction to key events, with emotional intensity peaking on July 15 and July 21, and diping on July 20.
+Over the span of July 14–21, 2020, Twitter users were mostly sharing negative sentiments. Also, tweet activity dipped on July 20 across all sentiment types. This pattern may reflect public reaction to key events, with emotional intensity peaking on July 15 and July 21, and dipping on July 20. 
 
 
 
