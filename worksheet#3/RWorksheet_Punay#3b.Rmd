@@ -1,5 +1,5 @@
 ---
-title: "RWorksheet_Puny#3b"
+title: "RWorksheet_Punay#3b"
 output:
   pdf_document: default
   html_document: default
