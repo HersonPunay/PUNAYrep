@@ -1,0 +1,201 @@
+---
+title: "RWorksheet_#3a"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#USING VECTORS
+```{r}
+#1 
+
+#a.
+LETTERS <- c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+"T", "U", "V", "W", "X", "Y", "Z")
+LETTERS 
+
+
+```
+```{r}
+#b.
+odd_LETTERS <- LETTERS[seq (1, length(LETTERS), by = 2)]
+odd_LETTERS
+```
+```{r}
+#c
+vowel_LETTERS <- LETTERS[c (1, 5, 9, 15, 21)]
+vowel_LETTERS 
+```
+
+```{r}
+#a
+letters <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+"t", "u", "v", "w", "x", "y", "z")
+letters
+```
+```{r}
+#d
+last_letters <- letters[c (22:26)]
+last_letters
+```
+```{r}
+#e
+last_letters <- letters[c (22:26)]
+inbetween_letters <- letters[c (15:24)]
+inbetween_letters
+```
+```{r}
+#2
+
+#a
+city <- c("Tugue-garao City", "Manila", "Iloilo City", "Tacloban", "Samal Island", "Davao City")
+
+#b
+temp <- c(42, 39, 34, 34, 30, 27)
+
+#c
+data_frame<- data.frame(city, temp)
+#d
+names(data_frame) <- c("City", "Temperature")
+data_frame
+
+```
+
+```{r}
+#e
+str(data_frame)
+
+```
+
+The output is a compact and detailed summary of the internal structure of my data frame.
+```{r}
+#f
+data_frame [3:4,]
+
+```
+```{r}
+#g
+data_frame[which.max(data_frame$Temperature),]
+data_frame[which.min(data_frame$Temperature),]
+```
+
+
+#USING MATRICES
+```{r}
+#2
+
+#a
+matrix_a <- matrix(c(1:8, 11:14), nrow = 3, ncol=4)
+matrix_a
+```
+```{r}
+#b
+matrix_a * 2
+```
+
+```{r}
+#c
+matrix_a[2, ]
+```
+```{r}
+#d
+matrix_a[1:2, 3:4]
+```
+```{r}
+#e
+matrix_a[3, 2:3]
+```
+```{r}
+#f
+matrix_a[, 4]
+```
+```{r}
+#g
+rownames(matrix_a) <- c("isa", "dalawa", "tatlo")
+colnames(matrix_a) <- c("uno", "dos", "tres", "quatro")
+matrix_a
+```
+
+```{r}
+#h
+dim(matrix_a) <- c(6, 2)
+matrix_a
+```
+
+#USING ARRAY
+```{r}
+#a
+values <- c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1)
+values_repeated <- rep(values, each = 2)
+
+arr <- array(values_repeated, dim = c(2, 4, 3))
+arr
+```
+```{r}
+#b
+length(dim(arr))
+```
+```{r}
+#c
+dimnames(arr) <- list(
+  c("a", "b"),
+  c("A", "B", "C", "D"),
+  c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array")
+)
+
+arr
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
