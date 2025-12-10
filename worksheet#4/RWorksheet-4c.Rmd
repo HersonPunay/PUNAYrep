@@ -1,0 +1,276 @@
+---
+title: "RWorksheet-4c"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)   
+library(readxl)
+```
+
+```{r}
+data(mpg)
+
+```
+
+
+
+#1
+```{r}
+#a.
+
+write.csv("mpg.csv", row.names = FALSE)
+ read.csv("mpg.csv", stringsAsFactors = FALSE)
+
+```
+
+
+```{r}
+#b.
+str(mpg)
+
+
+```
+All variables are categorical in nature.
+
+
+```{r}
+#c.
+str(mpg)
+
+```
+The numeric data consists exclusively of continuous variables.
+
+
+#2
+```{r}
+mpg %>%
+  group_by(manufacturer) %>%
+  summarise(models = n_distinct(model))
+
+```
+
+```{r}
+#a.
+unq_mod <- mpg %>%
+  group_by(manufacturer) %>%
+  summarise(unq_mod = n_distinct(model)) %>%
+  arrange(desc(unq_mod))
+
+unq_mod
+```
+
+```{r}
+#b.
+ordered_data <- unq_mod[order(-unq_mod$unq_mod), ]
+ordered_data$manufacturer <- factor(ordered_data$manufacturer, 
+                                   levels = ordered_data$manufacturer)
+
+# plot
+plot(x = ordered_data$manufacturer, 
+     y = ordered_data$unq_mod,
+     type = "p",  # "p" for points
+     main = "Number of Unique Models by Manufacturer",
+     xlab = "Manufacturer",
+     ylab = "Unique Models",
+     col = "black",
+     pch = 16,    # Solid circle points
+     cex = 1.2,   # Point size
+     las = 2,     # Vertical x-axis labels
+     frame.plot = FALSE)  # Remove frame
+
+#ggplot
+ggplot(unq_mod, aes(x = reorder(manufacturer, -unq_mod), y = unq_mod)) + geom_bar(stat = "identity", fill = "pink") +
+  xlab("Manufacturer") + ylab("Number of Unique Models") +
+  ggtitle("Number of Unique Models by Manufacturer") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#2
+```{r}
+#a
+
+mpg_unique <- mpg %>% distinct(model, manufacturer)
+
+ggplot(mpg_unique, aes(model, manufacturer)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle=90)) +
+  labs(title="Unique Model-Manufacturer Combinations")
+
+```
+For this type of comparison, a simple dot plot is not the most effective choice. A bar chart would provide clearer visual comparison between manufacturers and be more intuitive for readers.
+
+#3.
+```{r}
+top20 <- head(mpg, 20)
+
+ggplot(top20, aes(x = model, y = year)) +
+  geom_point() +
+  xlab("Model") + ylab("Year") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+#4
+```{r}
+
+
+mpg %>%
+  group_by(model) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+```
+
+```{r}
+#a.
+top20_models <- mpg %>%
+  group_by(model) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count)) %>%
+  head(20)
+
+ggplot(top20_models, aes(x = reorder(model, -count), y = count, fill = count)) +
+  geom_bar(stat = "identity") +
+  xlab("Model") + ylab("Number of Cars") +
+  ggtitle("Top 20 Car Models by Number of Cars") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_gradient(low = "lightblue", high = "darkblue")    
+```
+
+
+```{r}
+#b.
+
+top20_models <- mpg %>%
+  group_by(model) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count)) %>%
+  head(20)
+
+ggplot(top20_models, aes(x = reorder(model, count), y = count)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +  # This makes it horizontal
+  xlab("Car Model") + 
+  ylab("Number of Cars") +
+  ggtitle("Top 20 Car Models by Number of Cars") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10)
+  )
+```
+#5
+```{r}
+
+
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  ggtitle("Relationship between No. of Cylinders and Engine Displacement") +
+  xlab("Number of Cylinders") + ylab("Engine Displacement") +
+  scale_color_gradient(low = "lightpink", high = "red")
+```
+There is a strong positive correlation between cylinder count and engine displacement, indicating that engines with more cylinders tend to have larger displacement volumes.
+
+
+
+#6
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = displ)) +
+  geom_point() +
+  ggtitle("Relationship between Engine Displacement and Highway MPG") +
+  xlab("Engine Displacement (L)") + ylab("Highway MPG") +
+  scale_color_gradient(low = "lightblue", high = "darkblue")
+
+
+
+```
+
+#6
+```{r}
+traffic <- read.csv("traffic.csv")
+
+#a.
+str(traffic)
+
+#b.
+intersect_a <- traffic[traffic$Location == "Intersection A", ]
+intersect_b <- traffic[traffic$Location == "Intersection B", ]
+
+print(intersect_a)
+print(intersect_b)
+
+
+
+
+```
+```{r}
+#c.
+ggplot(traffic, aes(x = Date, y = Vehicles, color = Location, group = Location)) +
+  geom_line() +
+  geom_point() +
+  xlab("Date") + ylab("Number of Vehicles") +
+  ggtitle("Traffic Over Time by Junction") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+#7
+```{r}
+alexa <- read_excel("alexa_file.xlsx")
+
+#a.
+str(alexa)
+
+#b.
+total_var <- alexa %>%
+  group_by(variation) %>%
+  summarise(total = n())
+
+total_var
+
+
+
+```
+
+```{r}
+#c.
+ggplot(total_var, aes(x=reorder(variation, total), y=total)) +
+  geom_col(fill="skyblue") +
+  coord_flip() +
+  labs(title="Total Reviews per Variation",
+       x="Variation", y="Total Reviews")
+```
+
+
+```{r}
+#d.
+ggplot(alexa, aes(x=date, y=verified_reviews)) +
+  geom_line() +
+  labs(title="Verified Reviews Over Time",
+       x="Date", y="Verified Reviews")
+
+#e. 
+rating <- alexa %>%
+  group_by(variation) %>%
+  summarise(avg_rating = mean(rating, na.rm=TRUE))
+
+ggplot(rating, aes(x=reorder(variation, avg_rating), y=avg_rating)) +
+  geom_col(fill="skyblue") +
+  coord_flip() +
+  labs(title="Average Rating per Variation",
+       x="Variation", y="Average Rating")
+
+
+```
+
+
+
+
